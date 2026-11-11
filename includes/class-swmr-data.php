@@ -486,16 +486,11 @@ final class SWMR_Data {
 	}
 
 	/**
-	 * URL for "Pedir cita": opens the Elementor popup with the contact form.
-	 * Without a popup ID the button does nothing visible (no scrolling) until it is set in Ajustes.
+	 * URL for every "Pedir cita" button. The plugin's script opens the Elementor popup
+	 * set in Ajustes when a link to #mr-cita is clicked (also links pasted as HTML in Elementor).
 	 */
 	public static function cta_url() {
-		$id = absint( self::settings()['popup_id'] );
-		if ( ! $id ) {
-			return '#mr-cita';
-		}
-		$payload = base64_encode( wp_json_encode( array( 'id' => (string) $id, 'toggle' => false ) ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-		return '#' . rawurlencode( 'elementor-action:action=popup:open&settings=' . $payload );
+		return '#mr-cita';
 	}
 
 	public static function price_text( $price ) {

@@ -1,3 +1,7 @@
+## 1.0.5
+
+- Todos los botones «Pedir cita» usan el enlace `#mr-cita`; el plugin abre el popup de Elementor indicado en Ajustes. Sirve también para los bloques pegados como HTML en Elementor.
+
 ## 1.0.4
 
 - Los estilos del plugin se cargan en el `<head>` de la página de la landing (antes se añadían al final y la página se veía un instante sin estilos).

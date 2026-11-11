@@ -18,6 +18,7 @@ final class SWMR_Front {
 		add_shortcode( 'mr_servicios', array( __CLASS__, 'servicios' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
 		add_action( 'wp_footer', array( __CLASS__, 'jsonld' ), 20 );
+		add_action( 'wp_footer', array( __CLASS__, 'cta_script' ), 30 );
 		// With Yoast SEO: add AutoRepair to Yoast's own graph instead of a second JSON-LD block.
 		add_filter( 'wpseo_schema_graph', array( __CLASS__, 'yoast_graph' ), 20 );
 		add_filter( 'wpseo_schema_webpage', array( __CLASS__, 'yoast_webpage' ), 20 );
@@ -105,6 +106,28 @@ final class SWMR_Front {
 				'cta' => SWMR_Data::cta_url(),
 			)
 		);
+	}
+
+	/** Opens the Elementor popup for any link to #mr-cita. */
+	public static function cta_script() {
+		if ( ! self::$used && ! SWMR_Data::is_landing() ) {
+			return;
+		}
+		$id = absint( SWMR_Data::settings()['popup_id'] );
+		?>
+<script data-no-optimize="1" data-no-defer="1" data-cfasync="false" nowprocket>
+document.addEventListener('click', function (e) {
+	var a = e.target && e.target.closest ? e.target.closest('a[href="#mr-cita"]') : null;
+	if (!a) { return; }
+	e.preventDefault();
+	var id = <?php echo (int) $id; ?>;
+	var f = window.elementorProFrontend;
+	if (id && f && f.modules && f.modules.popup) {
+		f.modules.popup.showPopup({ id: id });
+	}
+});
+</script>
+		<?php
 	}
 
 	private static function yoast_active() {

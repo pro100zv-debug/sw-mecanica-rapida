@@ -224,7 +224,7 @@ final class SWMR_Admin {
 
 		echo '<div class="swmr-card"><h2>Botones y contacto</h2>';
 		self::field( $opt . '[cta_label]', 'Texto botón cita', $s['cta_label'] );
-		self::field( $opt . '[popup_id]', 'ID popup Elementor', $s['popup_id'], 'Todos los botones «Pedir cita» abren este popup con el formulario. Plantillas → Popups → el número de la URL al editarlo (post=123).' );
+		self::field( $opt . '[popup_id]', 'ID popup Elementor', $s['popup_id'], 'Todos los botones «Pedir cita» (enlaces a #mr-cita, también en bloques HTML) abren este popup. Plantillas → Popups → el número de la URL al editarlo (post=123). El popup debe mostrarse en esta página (condiciones) sin disparador automático.' );
 		self::field( $opt . '[call_label]', 'Texto botón llamada', $s['call_label'] );
 		self::field( $opt . '[phone_display]', 'Teléfono visible', $s['phone_display'] );
 		self::field( $opt . '[phone_tel]', 'Teléfono (tel:)', $s['phone_tel'] );
