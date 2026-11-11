@@ -25,6 +25,10 @@ final class SWMR_Front {
 
 	public static function register_assets() {
 		wp_register_style( 'swmr', SWMR_URL . 'assets/css/mr.css', array(), SWMR_VERSION );
+		// Load the CSS in <head> on the landing page, so the page never paints unstyled first.
+		if ( SWMR_Data::is_landing() ) {
+			wp_enqueue_style( 'swmr' );
+		}
 	}
 
 	private static function use_assets() {
