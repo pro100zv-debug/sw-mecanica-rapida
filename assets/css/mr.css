@@ -70,6 +70,21 @@
 .mr-btn--sm { min-height: 50px; padding: 0 24px; font-size: 11px; gap: 16px; }
 .mr-btn--sm span { font-size: 18px; }
 
+/* ===== HEADER ===== */
+.mr-header { position: sticky; top: 0; z-index: 50; background: rgba(7, 7, 7, .88); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid #262626; }
+.admin-bar .mr-header { top: 32px; }
+.mr-header__in { max-width: calc(1320px + 2 * var(--mr-pad)); margin: 0 auto; padding: 0 var(--mr-pad); min-height: var(--mr-header-h); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.mr-header__brand { display: flex; align-items: center; gap: 12px; min-width: 0; color: #fff !important; text-decoration: none !important; }
+.mr-header__brand img { width: 48px; height: 48px; object-fit: contain; }
+.mr-header__name { display: flex; flex-direction: column; gap: 3px; }
+.mr-header__name span { font: 700 18px/1 var(--mr-head); letter-spacing: .04em; }
+.mr-header__name small { font: 600 8.5px/1 var(--mr-body); letter-spacing: .2em; color: #999; }
+.mr-header__actions { display: flex; align-items: center; gap: 10px; }
+.mr-header__tel { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid #3a3a3a; color: #fff !important; text-decoration: none !important; font: 700 14px/1 var(--mr-head); letter-spacing: .04em; transition: border-color .3s; }
+.mr-header__tel:hover { border-color: var(--mr-y); }
+.mr-header__cta { min-height: 44px; padding: 0 18px; font-size: 11px; gap: 12px; }
+.mr-header__cta span { font-size: 16px; }
+
 /* ===== HERO ===== */
 .mr-hero {
 	position: relative;
@@ -295,6 +310,9 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 767px) {
+	.mr-header__tel span { display: none; }
+	.mr-header__name small { letter-spacing: .12em; }
+	.admin-bar .mr-header { top: 0; }
 	.mr-hero { min-height: 0; justify-content: flex-start; padding: 18px var(--mr-pad) 26px; gap: 16px; }
 	.mr-hero__top, .mr-hero__copy, .mr-hero__side { display: contents; }
 	.mr-hero__eyebrow { order: 1; font-size: 10px; letter-spacing: .18em; }

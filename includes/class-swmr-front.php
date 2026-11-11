@@ -13,10 +13,14 @@ final class SWMR_Front {
 	private static $used = false;
 
 	public static function init() {
+		add_shortcode( 'mr_header', array( __CLASS__, 'header' ) );
 		add_shortcode( 'mr_hero', array( __CLASS__, 'hero' ) );
 		add_shortcode( 'mr_servicios', array( __CLASS__, 'servicios' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
 		add_action( 'wp_footer', array( __CLASS__, 'jsonld' ), 20 );
+		// With Yoast SEO: add AutoRepair to Yoast's own graph instead of a second JSON-LD block.
+		add_filter( 'wpseo_schema_graph', array( __CLASS__, 'yoast_graph' ), 20 );
+		add_filter( 'wpseo_schema_webpage', array( __CLASS__, 'yoast_webpage' ), 20 );
 	}
 
 	public static function register_assets() {
@@ -87,12 +91,25 @@ final class SWMR_Front {
 		);
 	}
 
-	/** AutoRepair + WebPage JSON-LD, built from the same data the page shows. */
-	public static function jsonld() {
-		$set = SWMR_Data::settings();
-		if ( ! self::$used || empty( $set['jsonld'] ) ) {
-			return;
-		}
+	/** [mr_header] — sticky header: logo, phone, «Pedir cita». */
+	public static function header() {
+		self::use_assets();
+		return self::render(
+			'header',
+			array(
+				'set' => SWMR_Data::settings(),
+				'cta' => SWMR_Data::cta_url(),
+			)
+		);
+	}
+
+	private static function yoast_active() {
+		return defined( 'WPSEO_VERSION' );
+	}
+
+	/** AutoRepair node built from the same data the page shows. */
+	public static function business_node() {
+		$set    = SWMR_Data::settings();
 		$url    = trailingslashit( home_url( '/' ) );
 		$offers = array();
 		foreach ( SWMR_Data::services() as $k => $s ) {
@@ -112,7 +129,7 @@ final class SWMR_Front {
 		if ( $set['sat_open'] && $set['sat_close'] ) {
 			$hours[] = array( '@type' => 'OpeningHoursSpecification', 'dayOfWeek' => 'Saturday', 'opens' => $set['sat_open'], 'closes' => $set['sat_close'] );
 		}
-		$biz = array_filter(
+		return array_filter(
 			array(
 				'@type'                     => 'AutoRepair',
 				'@id'                       => $url . '#taller',
@@ -140,10 +157,34 @@ final class SWMR_Front {
 				'hasOfferCatalog'           => array( '@type' => 'OfferCatalog', 'name' => 'Servicios de mecánica rápida', 'itemListElement' => $offers ),
 			)
 		);
+	}
+
+	public static function yoast_graph( $graph ) {
+		if ( empty( SWMR_Data::settings()['jsonld'] ) || ! SWMR_Data::is_landing() || ! is_array( $graph ) ) {
+			return $graph;
+		}
+		$graph[] = self::business_node();
+		return $graph;
+	}
+
+	public static function yoast_webpage( $data ) {
+		if ( ! empty( SWMR_Data::settings()['jsonld'] ) && SWMR_Data::is_landing() && is_array( $data ) ) {
+			$data['about'] = array( '@id' => trailingslashit( home_url( '/' ) ) . '#taller' );
+		}
+		return $data;
+	}
+
+	/** Without Yoast: print AutoRepair + WebPage in the footer. */
+	public static function jsonld() {
+		$set = SWMR_Data::settings();
+		if ( ! self::$used || empty( $set['jsonld'] ) || self::yoast_active() ) {
+			return;
+		}
+		$url   = trailingslashit( home_url( '/' ) );
 		$graph = array(
 			'@context' => 'https://schema.org',
 			'@graph'   => array(
-				$biz,
+				self::business_node(),
 				array(
 					'@type'      => 'WebPage',
 					'@id'        => $url . '#webpage',

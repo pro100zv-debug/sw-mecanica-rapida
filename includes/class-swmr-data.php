@@ -401,6 +401,71 @@ final class SWMR_Data {
 		return is_array( $saved ) && $saved ? $saved : self::default_tiles();
 	}
 
+	/** Media-library file names (without extension) used when a card has no image set. */
+	public static function default_files() {
+		return array(
+			'aceite' => 'cambio-aceite-filtro',
+			'filtros' => 'cambio-filtros-coche',
+			'caja' => 'aceite-caja-cambios',
+			'revision' => 'revision-coche',
+			'preitv' => 'revision-pre-itv',
+			'diagnosis' => 'diagnosis-electronica-coche',
+			'frenos' => 'pastillas-discos-freno',
+			'neumaticos' => 'cambio-neumaticos',
+			'pinchazo' => 'reparacion-pinchazos',
+			'alineacion' => 'alineacion-equilibrado-ruedas',
+			'bateria' => 'cambio-bateria-coche',
+			'aire' => 'recarga-aire-acondicionado-coche',
+			'amortiguadores' => 'cambio-amortiguadores',
+			'escape' => 'tubo-escape',
+			'distribucion' => 'correa-distribucion',
+			'pequenos' => 'escobillas-bombillas-liquidos',
+		);
+	}
+
+	/**
+	 * Card image URL: the one set in Tarjetas, else the media-library image whose slug
+	 * matches the default file name (e.g. cambio-aceite-filtro.webp). Cached for 12 h.
+	 */
+	public static function tile_image( $tile ) {
+		if ( ! empty( $tile['image'] ) ) {
+			return $tile['image'];
+		}
+		$files = self::default_files();
+		if ( empty( $tile['key'] ) || empty( $files[ $tile['key'] ] ) ) {
+			return '';
+		}
+		$map = get_transient( 'swmr_media_map' );
+		if ( ! is_array( $map ) ) {
+			$map = array();
+			foreach ( $files as $k => $slug ) {
+				$ids = get_posts(
+					array(
+						'post_type'      => 'attachment',
+						'post_status'    => 'inherit',
+						'name'           => $slug,
+						'posts_per_page' => 1,
+						'fields'         => 'ids',
+						'no_found_rows'  => true,
+					)
+				);
+				$map[ $k ] = $ids ? (string) wp_get_attachment_url( $ids[0] ) : '';
+			}
+			set_transient( 'swmr_media_map', $map, 12 * HOUR_IN_SECONDS );
+		}
+		return isset( $map[ $tile['key'] ] ) ? $map[ $tile['key'] ] : '';
+	}
+
+	/** True on the page that holds the [mr_hero] / [mr_servicios] shortcodes (also inside Elementor data). */
+	public static function is_landing() {
+		if ( ! is_singular() ) {
+			return false;
+		}
+		$id      = get_queried_object_id();
+		$content = (string) get_post_field( 'post_content', $id ) . (string) get_post_meta( $id, '_elementor_data', true );
+		return false !== strpos( $content, 'mr_hero' ) || false !== strpos( $content, 'mr_servicios' );
+	}
+
 	public static function settings() {
 		$saved = get_option( self::OPT_SETTINGS );
 		return array_merge( self::default_settings(), is_array( $saved ) ? $saved : array() );

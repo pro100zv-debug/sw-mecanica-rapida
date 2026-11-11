@@ -17,6 +17,8 @@ final class SWMR_Admin {
 		add_action( 'admin_init', array( __CLASS__, 'register' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notice_popup' ) );
+		add_action( 'add_attachment', function () { delete_transient( 'swmr_media_map' ); } );
+		add_action( 'delete_attachment', function () { delete_transient( 'swmr_media_map' ); } );
 		add_filter( 'plugin_action_links_' . plugin_basename( SWMR_FILE ), array( __CLASS__, 'links' ) );
 
 		// Prices changed → purge page cache so visitors see them at once.
@@ -40,6 +42,7 @@ final class SWMR_Admin {
 	}
 
 	public static function purge_cache() {
+		delete_transient( 'swmr_media_map' );
 		do_action( 'litespeed_purge_all' ); // LiteSpeed Cache.
 		if ( function_exists( 'wp_cache_clear_cache' ) ) {
 			wp_cache_clear_cache();
@@ -192,7 +195,7 @@ final class SWMR_Admin {
 
 	public static function page_tiles() {
 		$opt = SWMR_Data::OPT_TILES;
-		self::head( 'Tarjetas de servicios', 'Tarjetas del bloque <code>[mr_servicios]</code>. «Servicios» = claves separadas por comas: el precio de la tarjeta es el más bajo de ellas y la tarjeta se marca como «TU SERVICIO» cuando el visitante llega con una de esas claves. Imagen: render 3D con fondo transparente (PNG/WebP, ~600 px).' );
+		self::head( 'Tarjetas de servicios', 'Tarjetas del bloque <code>[mr_servicios]</code>. «Servicios» = claves separadas por comas: el precio de la tarjeta es el más bajo de ellas y la tarjeta se marca como «TU SERVICIO» cuando el visitante llega con una de esas claves. Imagen: render 3D con fondo transparente (PNG/WebP, ~600 px). Vacío = se usa automáticamente la imagen de la biblioteca con el nombre estándar (p. ej. cambio-aceite-filtro.webp).' );
 		echo '<form method="post" action="options.php">';
 		settings_fields( 'swmr_tiles' );
 		echo '<div class="swmr-grid">';
@@ -214,7 +217,7 @@ final class SWMR_Admin {
 	public static function page_settings() {
 		$opt = SWMR_Data::OPT_SETTINGS;
 		$s   = SWMR_Data::settings();
-		self::head( 'Ajustes', 'Shortcodes: <code>[mr_hero]</code> (primer pantallazo) y <code>[mr_servicios]</code> (franja amarilla + tarjetas). Insértalos con el widget «Shortcode» de Elementor en secciones de ancho completo y sin padding.' );
+		self::head( 'Ajustes', 'Shortcodes: <code>[mr_header]</code> (cabecera), <code>[mr_hero]</code> (primer pantallazo) y <code>[mr_servicios]</code> (franja amarilla + tarjetas). Insértalos con el widget «Shortcode» de Elementor en secciones de ancho completo y sin padding.' );
 		echo '<form method="post" action="options.php">';
 		settings_fields( 'swmr_settings' );
 		echo '<div class="swmr-grid">';
@@ -245,7 +248,7 @@ final class SWMR_Admin {
 		self::field( $opt . '[region]', 'Provincia/CC.AA.', $s['region'] );
 		self::field( $opt . '[lat]', 'Latitud', $s['lat'] );
 		self::field( $opt . '[lng]', 'Longitud', $s['lng'] );
-		self::field( $opt . '[logo]', 'Logo (URL)', $s['logo'] );
+		self::field( $opt . '[logo]', 'Logo (URL)', $s['logo'], 'También se usa en la cabecera [mr_header].' );
 		self::field( $opt . '[image]', 'Foto (URL)', $s['image'] );
 		self::field( $opt . '[languages]', 'Idiomas', $s['languages'] );
 		echo '<div class="swmr-row"><label>Perfiles (sameAs)</label><textarea rows="3" name="' . esc_attr( $opt . '[same_as]' ) . '">' . esc_textarea( $s['same_as'] ) . '</textarea></div>';

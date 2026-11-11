@@ -2,6 +2,7 @@
 
 Plugin de WordPress para la landing de mecánica rápida de **Automagia** (Sevilla).
 
+- **`[mr_header]`** — cabecera fija: logo, teléfono y botón «Pedir cita».
 - **`[mr_hero]`** — primer pantallazo dinámico. Cambia antetítulo, H1, subtítulo, tiempo y precio según el parámetro `?servicio=` de la URL (una página, un texto por grupo de anuncios de Google Ads). Incluye el coche que se monta en pantalla (SVG animado con CSS, sin librerías) y el cuadro de mandos con el tiempo aproximado y el precio «desde».
 - **`[mr_servicios]`** — franja amarilla + tarjetas de servicios con precio «desde». La tarjeta del servicio con el que llega el visitante se marca como «TU SERVICIO».
 - **JSON-LD** `AutoRepair` + `WebPage` con todos los servicios y precios, generado desde los mismos datos que se muestran.
