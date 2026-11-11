@@ -225,7 +225,8 @@
 
 /* ===== ROAD STRIP ===== */
 .mr-road {
-	position: relative; z-index: 2; height: 40px; margin-top: 6px; overflow: hidden;
+	/* margin-top = half the width × tan(angle) + 6px, so the slanted edge is never clipped by the container above. */
+	position: relative; z-index: 2; height: 40px; margin-top: calc(.9vw + 6px); overflow: hidden;
 	display: flex; align-items: center;
 	background: var(--mr-y); color: #080808; transform: skewY(-1deg);
 }
@@ -317,6 +318,7 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 767px) {
+	.mr-road { transform: skewY(-2.2deg); margin-top: calc(1.95vw + 6px); }
 	.mr-header__tel span { display: none; }
 	.mr-header__name small { letter-spacing: .12em; }
 	.admin-bar .mr-header { top: 0; }

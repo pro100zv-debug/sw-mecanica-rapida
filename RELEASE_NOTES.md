@@ -1,3 +1,8 @@
+## 1.0.7
+
+- Franja amarilla: ya no se corta en recto por arriba (sin la línea amarilla recta encima).
+- Móvil: franja un poco más inclinada.
+
 ## 1.0.6
 
 - Imagen de «Alineación y equilibrado» más grande, al tamaño visual de las demás tarjetas.
