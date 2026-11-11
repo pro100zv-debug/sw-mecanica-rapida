@@ -1,3 +1,8 @@
+## 1.0.6
+
+- Imagen de «Alineación y equilibrado» más grande, al tamaño visual de las demás tarjetas.
+- Idiomas por defecto: es, en, uk, ru.
+
 ## 1.0.5
 
 - Todos los botones «Pedir cita» usan el enlace `#mr-cita`; el plugin abre el popup de Elementor indicado en Ajustes. Sirve también para los bloques pegados como HTML en Elementor.
