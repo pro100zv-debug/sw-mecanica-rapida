@@ -48,12 +48,20 @@ $marquee    = array( 'Cambio de aceite', 'Frenos', 'Neumáticos', 'Aire acondici
 				$min    = SWMR_Data::tile_price( $t, $services );
 				$icon   = isset( $icons[ $t['key'] ] ) ? $icons[ $t['key'] ] : '';
 				$img    = SWMR_Data::tile_image( $t );
+				$alt    = '';
+				if ( $img ) {
+					$att = attachment_url_to_postid( $img );
+					$alt = $att ? (string) get_post_meta( $att, '_wp_attachment_image_alt', true ) : '';
+					if ( '' === $alt ) {
+						$alt = $t['name'];
+					}
+				}
 				?>
 				<a class="mr-tile<?php echo $active ? ' is-active' : ''; ?>" href="<?php echo esc_attr( $cta ); ?>" data-servicio="<?php echo esc_attr( $t['key'] ); ?>">
 					<span class="mr-tile__card" aria-hidden="true"></span>
 					<span class="mr-tile__media" aria-hidden="true">
 						<?php if ( $img ) : ?>
-							<img src="<?php echo esc_url( $img ); ?>" alt="" width="300" height="300" loading="lazy" decoding="async">
+							<img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $alt ); ?>" width="300" height="300" loading="lazy" decoding="async">
 						<?php else : ?>
 							<span class="mr-tile__ph"><svg viewBox="0 0 32 32" fill="none" stroke="#FFED00" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><?php echo $icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static icon markup. ?></svg></span>
 						<?php endif; ?>

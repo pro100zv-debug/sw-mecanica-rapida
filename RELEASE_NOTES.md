@@ -1,3 +1,7 @@
+## 1.0.10
+
+- Imágenes de las tarjetas con texto alternativo: el «Texto alternativo» de la biblioteca de medios o, si está vacío, el nombre del servicio.
+
 ## 1.0.9
 
 - «Sevilla Este» sustituido por «Sevilla» en los textos (el taller no está en Sevilla Este). Los textos ya guardados en el panel se corrigen solos una vez.
