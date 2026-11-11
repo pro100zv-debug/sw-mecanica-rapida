@@ -88,3 +88,37 @@ $car = file_get_contents( SWMR_DIR . 'assets/img/car.svg' ); // phpcs:ignore Wor
 		</div>
 	</div>
 </section>
+<script data-no-optimize="1" data-no-defer="1" data-no-minify="1" data-cfasync="false" nowprocket>
+(function () {
+	var hero = document.getElementById('inicio');
+	if (!hero || hero.classList.contains('mr-go')) { return; }
+	hero.classList.add('mr-wait');
+	var started = false;
+	function go() {
+		if (started) { return; }
+		started = true;
+		var done = false;
+		function start() {
+			if (done) { return; }
+			done = true;
+			hero.classList.remove('mr-wait');
+			hero.classList.add('mr-go');
+		}
+		// Two frames so the browser has painted the static first screen before the assembly starts.
+		requestAnimationFrame(function () { requestAnimationFrame(start); });
+		setTimeout(start, 120);
+	}
+	function whenVisible(cb) {
+		if (document.visibilityState === 'visible') { cb(); return; }
+		document.addEventListener('visibilitychange', function onVis() {
+			if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', onVis); cb(); }
+		});
+	}
+	var loaded = new Promise(function (res) {
+		if (document.readyState === 'complete') { res(); } else { window.addEventListener('load', res, { once: true }); }
+	});
+	var fonts = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+	var cap = new Promise(function (res) { setTimeout(res, 3500); });
+	Promise.race([Promise.all([loaded, fonts]), cap]).then(function () { whenVisible(go); });
+})();
+</script>

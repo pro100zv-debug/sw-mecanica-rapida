@@ -284,6 +284,11 @@
 .mr-ribbon__sub { margin-top: 8px !important; font-size: 13px; line-height: 1.65; color: #BDBDBD; }
 .mr-ribbon__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* Animation waits until the page (and fonts) finished loading — see hero.php */
+.mr-hero.mr-wait .mr-stage *,
+.mr-hero.mr-wait .mr-stage,
+.mr-hero.mr-wait .mr-dial__needle { animation-play-state: paused !important; }
+
 /* ===== Keyframes ===== */
 @keyframes mr-head { 0%, 9% { transform: translate3d(-12vw, 0, 0) rotate(-8deg); opacity: 0; } 18% { opacity: .35; } 55% { opacity: .22; } 82%, 100% { transform: translate3d(180vw, 0, 0) rotate(-8deg); opacity: 0; } }
 @keyframes mr-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
