@@ -1,3 +1,7 @@
+## 1.0.8
+
+- Quitada la línea fina bajo el primer bloque, encima de la franja amarilla.
+
 ## 1.0.7
 
 - Franja amarilla: ya no se corta en recto por arriba (sin la línea amarilla recta encima).
