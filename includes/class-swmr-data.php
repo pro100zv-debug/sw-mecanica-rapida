@@ -378,7 +378,7 @@ final class SWMR_Data {
 			'sat_close'      => '14:00',
 			'logo'           => '',
 			'image'          => '',
-			'same_as'        => "https://automagia.es/\nhttps://www.instagram.com/taller_de_automagia/\nhttps://www.facebook.com/taller.de.automagia",
+			'same_as'        => "https://automagia.es/\nhttps://www.instagram.com/talleres_mecanicos_automagia/\nhttps://www.facebook.com/taller.de.automagia",
 			'languages'      => 'es,en,uk,ru',
 			'jsonld'         => 1,
 		);
