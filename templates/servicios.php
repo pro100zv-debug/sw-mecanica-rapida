@@ -29,7 +29,7 @@ $marquee    = array( 'Cambio de aceite', 'Frenos', 'Neumáticos', 'Aire acondici
 				<h2 id="mr-services-title" class="mr-h2">Servicios de<br>mecánica rápida<br><span class="mr-y">en Sevilla.</span></h2>
 			</div>
 			<div class="mr-head__aside">
-				<p class="mr-head__text">En nuestro taller de mecánica rápida en Sevilla Este ves el precio desde el primer momento y pides cita en dos clics. Todas las marcas.</p>
+				<p class="mr-head__text">En nuestro taller de mecánica rápida en Sevilla ves el precio desde el primer momento y pides cita en dos clics. Todas las marcas.</p>
 				<div class="mr-facts">
 					<span>Precio cerrado</span>
 					<?php if ( '' !== trim( $set['years'] ) ) : ?><span><?php echo esc_html( $set['years'] ); ?> años</span><?php endif; ?>

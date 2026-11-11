@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       SW Mecánica Rápida
  * Description:       Landing de mecánica rápida: hero dinámico según ?servicio= (coche animado + cuadro de mandos), tarjetas de servicios con precios «desde» y datos estructurados JSON-LD. Precios y textos en Mecánica Rápida → Servicios.
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            SergioWeb
  * Author URI:        https://sergioweb.es/
  * Requires at least: 5.8
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SWMR_VERSION', '1.0.8' );
+define( 'SWMR_VERSION', '1.0.9' );
 define( 'SWMR_FILE', __FILE__ );
 define( 'SWMR_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SWMR_URL', plugin_dir_url( __FILE__ ) );
@@ -47,4 +47,5 @@ if ( is_admin() ) {
 	SWMR_Admin::init();
 }
 
+add_action( 'init', array( 'SWMR_Data', 'migrate' ) );
 SWMR_Front::init();

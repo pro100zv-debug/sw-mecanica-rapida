@@ -1,3 +1,8 @@
+## 1.0.9
+
+- «Sevilla Este» sustituido por «Sevilla» en los textos (el taller no está en Sevilla Este). Los textos ya guardados en el panel se corrigen solos una vez.
+- Instagram por defecto: talleres_mecanicos_automagia.
+
 ## 1.0.8
 
 - Quitada la línea fina bajo el primer bloque, encima de la franja amarilla.

@@ -21,7 +21,7 @@ final class SWMR_Data {
 		return array(
 			'general' => array(
 				'name'      => 'Mecánica rápida',
-				'eyebrow'   => 'Taller de mecánica rápida · Sevilla Este',
+				'eyebrow'   => 'Taller de mecánica rápida · Sevilla',
 				'h1a'       => 'Mecánica rápida',
 				'h1b'       => 'en Sevilla',
 				'sub'       => 'Aceite, frenos, neumáticos, batería y aire acondicionado en un solo taller. Precio cerrado antes de empezar.',
@@ -364,7 +364,7 @@ final class SWMR_Data {
 			'years'          => '15',
 			'biz_name'       => 'Automagia',
 			'biz_alt'        => 'Automagia Talleres Mecánicos',
-			'biz_desc'       => 'Taller de mecánica rápida multimarca en Sevilla Este: cambio de aceite, frenos, neumáticos, aire acondicionado, pre-ITV y diagnosis electrónica.',
+			'biz_desc'       => 'Taller de mecánica rápida multimarca en Sevilla: cambio de aceite, frenos, neumáticos, aire acondicionado, pre-ITV y diagnosis electrónica.',
 			'email'          => 'automagia.es@gmail.com',
 			'street'         => 'Av. Fernández Murube, 40',
 			'city'           => 'Sevilla',
@@ -382,6 +382,32 @@ final class SWMR_Data {
 			'languages'      => 'es,en,uk,ru',
 			'jsonld'         => 1,
 		);
+	}
+
+	/**
+	 * One-time fix of saved texts: the workshop is not in "Sevilla Este".
+	 * Replaces it with "Sevilla" in saved services and settings.
+	 */
+	public static function migrate() {
+		if ( get_option( 'swmr_fix_sevilla' ) ) {
+			return;
+		}
+		$fix = function ( $v ) use ( &$fix ) {
+			if ( is_array( $v ) ) {
+				return array_map( $fix, $v );
+			}
+			return is_string( $v ) ? str_replace( array( 'en Sevilla Este', 'Sevilla Este' ), array( 'en Sevilla', 'Sevilla' ), $v ) : $v;
+		};
+		foreach ( array( 'swmr_services', 'swmr_settings', 'swmr_tiles' ) as $opt ) {
+			$val = get_option( $opt, null );
+			if ( null !== $val && false !== $val ) {
+				$new = $fix( $val );
+				if ( $new !== $val ) {
+					update_option( $opt, $new );
+				}
+			}
+		}
+		update_option( 'swmr_fix_sevilla', 1, false );
 	}
 
 	public static function services() {
