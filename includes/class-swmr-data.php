@@ -379,7 +379,7 @@ final class SWMR_Data {
 			'logo'           => '',
 			'image'          => '',
 			'same_as'        => "https://automagia.es/\nhttps://www.instagram.com/taller_de_automagia/\nhttps://www.facebook.com/taller.de.automagia",
-			'languages'      => 'es,en,uk,ru,pl,ro',
+			'languages'      => 'es,en,uk,ru',
 			'jsonld'         => 1,
 		);
 	}
