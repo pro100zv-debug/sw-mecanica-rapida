@@ -63,9 +63,13 @@ final class SWMR_Front {
 			$t_text  = ( $time >= 60 && 0 === $time % 60 ) ? ( $time / 60 ) . ' H' : $time . ' MIN';
 		}
 
+		// Longest title line, used on desktop to shrink long service titles.
+		$tlen = max( self::text_len( $d['h1a'] ), self::text_len( $d['h1b'] ) );
+
 		return self::render(
 			'hero',
 			array(
+				'tlen'    => $tlen,
 				'd'       => $d,
 				'key'     => $key,
 				'set'     => $set,
@@ -77,6 +81,12 @@ final class SWMR_Front {
 				'needle'  => number_format( -135 + $frac * 270, 1, '.', '' ),
 			)
 		);
+	}
+
+	/** Character count of a title line (multibyte safe). */
+	private static function text_len( $text ) {
+		$text = trim( (string) $text );
+		return function_exists( 'mb_strlen' ) ? mb_strlen( $text, 'UTF-8' ) : (int) preg_match_all( '/./u', $text );
 	}
 
 	/** [mr_servicios] — road strip + service cards + diagnosis ribbon. */

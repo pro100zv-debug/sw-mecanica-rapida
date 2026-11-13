@@ -1,3 +1,7 @@
+## 1.0.11
+
+- Primer pantallazo en escritorio: los títulos largos de los servicios se muestran con una letra más pequeña para que el coche animado siga visible en la pantalla. El título general no cambia.
+
 ## 1.0.10
 
 - Imágenes de las tarjetas con texto alternativo: el «Texto alternativo» de la biblioteca de medios o, si está vacío, el nombre del servicio.

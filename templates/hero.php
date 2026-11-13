@@ -1,6 +1,6 @@
 <?php
 /**
- * Hero template. Vars: $d (service), $key, $set, $cta, $price, $t_label, $t_text, $dash, $needle.
+ * Hero template. Vars: $tlen, $d (service), $key, $set, $cta, $price, $t_label, $t_text, $dash, $needle.
  *
  * @package SW_Mecanica_Rapida
  */
@@ -18,7 +18,8 @@ $car = file_get_contents( SWMR_DIR . 'assets/img/car.svg' ); // phpcs:ignore Wor
 	<div class="mr-hero__top">
 		<div class="mr-hero__copy">
 			<p class="mr-hero__eyebrow"><span aria-hidden="true"></span><?php echo esc_html( $d['eyebrow'] ); ?></p>
-			<h1 id="mr-hero-title" class="mr-hero__title">
+			<?php $fit = $tlen > 16; ?>
+			<h1 id="mr-hero-title" class="mr-hero__title<?php echo $fit ? ' mr-hero__title--fit' : ''; ?>"<?php echo $fit ? ' style="--mr-len: ' . (int) $tlen . '"' : ''; ?>>
 				<span class="mr-hero__title-solid"><?php echo esc_html( $d['h1a'] ); ?></span>
 				<span class="mr-hero__title-outline"><?php echo esc_html( $d['h1b'] ); ?></span>
 			</h1>

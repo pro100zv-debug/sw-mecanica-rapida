@@ -309,6 +309,16 @@
 @keyframes mr-scan { 0% { left: 0; opacity: 0; } 10%, 90% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
 @keyframes mr-marquee { to { transform: translateX(-50%); } }
 
+/* Long service titles (desktop): shrink so each line fits the text column */
+@media (min-width: 1025px) {
+	.mr-hero__title--fit {
+		font-size: max(
+			min(3.4vw, 46px),
+			min(calc((min(100vw, 1320px + 2 * var(--mr-pad)) - 2 * var(--mr-pad)) * .5 / (var(--mr-len, 16) * .7)), 4.8vw, 76px)
+		);
+	}
+}
+
 /* ===== Tablet ===== */
 @media (max-width: 1024px) {
 	.mr-hero__top { grid-template-columns: minmax(0, 1fr); }
