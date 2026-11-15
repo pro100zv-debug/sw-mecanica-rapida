@@ -1,3 +1,7 @@
+## 1.0.12
+
+- Primer pantallazo en portátiles y pantallas de poca altura (escritorio, hasta 900 px de alto): el coche animado pasa a la columna derecha, debajo del velocímetro, para que se vea sin hacer scroll. En monitores más altos, tablet y móvil no cambia nada.
+
 ## 1.0.11
 
 - Primer pantallazo en escritorio: los títulos largos de los servicios se muestran con una letra más pequeña para que el coche animado siga visible en la pantalla. El título general no cambia.
